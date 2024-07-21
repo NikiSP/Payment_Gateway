@@ -14,16 +14,16 @@ class BankType(models.TextChoices):
 
 
 class CurrencyEnum(models.TextChoices):
-    IRR = "IRR", _("Rial")
-    IRT = "IRT", _("Toman")
+    IRR= "IRR", _("Rial")
+    IRT= "IRT", _("Toman")
 
     @classmethod
-    def rial_to_toman(cls, amount):
-        return amount / 10
+    def rial2toman_converter(cls, amount):
+        return amount/10
 
     @classmethod
-    def toman_to_rial(cls, amount):
-        return amount * 10
+    def toman2rial_coverter(cls, amount):
+        return amount*10
 
 
 class PaymentStatus(models.TextChoices):
