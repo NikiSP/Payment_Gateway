@@ -4,7 +4,7 @@ import importlib
 import logging
 
 from . import default_settings as settings
-from .banks import BaseBank
+from .bank import mellat
 from .exceptions.exceptions import BankGatewayAutoConnectionFailed
 from .models import BankType
 
@@ -31,7 +31,7 @@ class BankFactory:
 
         return bank_class, self._secret_value_reader.read(bank_type=bank_type, identifier=identifier)
 
-    def create(self, bank_type: BankType = None, identifier: str = "1") -> BaseBank:
+    def create(self, bank_type: BankType = None, identifier: str = "1") -> mellat:
         """Build bank class"""
         if not bank_type:
             bank_type = self._secret_value_reader.default(identifier)

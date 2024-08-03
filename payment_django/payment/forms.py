@@ -1,12 +1,7 @@
-from django.forms import ModelForm
-from .models import Game, Transaction
+from django import forms
 
-class TransactionForm(ModelForm):
-    class Meta:
-        model= Transaction
-        fields= ['game', 'transaction_id', 'amount', 'status']
-        
-# class GameForm(ModelForm):
-#     class Meta:
-#         model= Game
-#         fields= ['name', 'game_id']
+
+class PaymentSampleForm(forms.Form):
+    amount = forms.IntegerField(label="Amount", initial=10000)
+    mobile_number = forms.CharField(label="Mobile", max_length=13, initial="+989112223344")
+
