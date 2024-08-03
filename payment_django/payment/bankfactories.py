@@ -6,7 +6,7 @@ import logging
 from . import default_settings as settings
 from .bank import mellat
 from .exceptions.exceptions import BankGatewayAutoConnectionFailed
-from .models import BankType
+from .models.enum import BankType
 
 
 class BankFactory:

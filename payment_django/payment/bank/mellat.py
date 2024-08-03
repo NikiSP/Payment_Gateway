@@ -1,3 +1,4 @@
+import json
 import logging
 import six
 import abc
@@ -14,8 +15,9 @@ from django.utils import timezone
 
 from .. import default_settings as settings
 from ..exceptions.exceptions import *
+from payment_django.payment.models.banks import Bank
+
 from ..models.enum import CurrencyEnum, PaymentStatus
-from ..models.banks import Bank
 from utils import append_querystring
 
 
