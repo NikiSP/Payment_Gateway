@@ -3,7 +3,7 @@ import datetime
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .enum import BankType, PaymentStatus
+from payment.models.enum import BankType, PaymentStatus
 
 
 class BankQuerySet(models.QuerySet):
@@ -42,6 +42,7 @@ class BankManager(models.Manager):
 
 
 class Bank(models.Model):
+        
     status = models.CharField(
         max_length=50,
         null=False,
@@ -80,6 +81,7 @@ class Bank(models.Model):
     class Meta:
         verbose_name = _("Bank gateway")
         verbose_name_plural = _("Bank gateways")
+        app_label= 'payment'
 
     def __str__(self):
         return "{}-{}".format(self.pk, self.tracking_code)

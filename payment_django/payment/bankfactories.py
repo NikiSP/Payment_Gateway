@@ -3,11 +3,10 @@ from __future__ import absolute_import, unicode_literals
 import importlib
 import logging
 
-from . import default_settings as settings
-from .bank import mellat
-from .exceptions.exceptions import BankGatewayAutoConnectionFailed
-from .models import BankType
-
+from payment import default_settings as settings
+from payment.bank import mellat
+from payment.exceptions.exceptions import BankGatewayAutoConnectionFailed
+from payment.models.banks import BankType
 
 class BankFactory:
     def __init__(self):

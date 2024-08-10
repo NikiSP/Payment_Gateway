@@ -12,18 +12,17 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .. import default_settings as settings
-from ..exceptions.exceptions import *
-from ..models.enum import CurrencyEnum, PaymentStatus
-from ..models.banks import Bank
-from utils import append_querystring
-
+from payment import default_settings as settings
+from payment.exceptions.exceptions import *
+from payment.models.enum import CurrencyEnum, PaymentStatus
+from payment.bank.utils import append_querystring
+from payment.models.banks import Bank
 
 class Mellat():
-    _terminal_code= None
-    _username= None
-    _password= None
-
+    _terminal_code= 7164489
+    _username= 'ebcom41'
+    _password= 26952397
+    
     _gateway_currency: str= CurrencyEnum.IRR
     _currency: str= CurrencyEnum.IRR
     _amount: int= 0

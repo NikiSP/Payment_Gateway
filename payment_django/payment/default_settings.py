@@ -1,8 +1,7 @@
 """Default settings for messaging."""
 
 from django.conf import settings
-from .apps import AZIranianBankGatewaysConfig
-
+from payment.apps import AZIranianBankGatewaysConfig
 
 BANK_CLASS = getattr(
     settings,

@@ -4,14 +4,12 @@ from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
 
-from .. import bankfactories
-from .. import default_settings as settings
-from .. import models as bank_models
-from ..apps import AZIranianBankGatewaysConfig
-from ..exceptions import AZBankGatewaysException
-
-from ..forms import PaymentSampleForm
-
+from payment import bankfactories
+from payment import default_settings as settings
+from payment import models as bank_models
+from payment.apps import AZIranianBankGatewaysConfig
+from payment.exceptions.exceptions import AZBankGatewaysException
+from payment.forms import PaymentSampleForm
 
 def sample_payment_view(request):
     # if this is a POST request we need to process the form data

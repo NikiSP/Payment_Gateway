@@ -5,8 +5,8 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from azbankgateways.bankfactories import BankFactory
-from azbankgateways.exceptions import AZBankGatewaysException
+from payment.bankfactories import BankFactory
+from payment.exceptions.exceptions import AZBankGatewaysException
 
 
 @csrf_exempt

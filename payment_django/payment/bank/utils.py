@@ -1,8 +1,8 @@
 import json
 from urllib import parse
+import typing
 
-from types import DictQuerystring
-
+DictQuerystring = typing.Tuple[str, dict]
 
 def get_json(resp):
     """

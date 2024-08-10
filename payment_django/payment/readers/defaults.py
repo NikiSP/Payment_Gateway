@@ -1,7 +1,7 @@
 from azbankgateways import default_settings as settings
 from azbankgateways.models import BankType
 
-from .bases import Reader
+from payment.readers.bases import Reader
 
 
 class DefaultReader(Reader):
