@@ -49,15 +49,17 @@ class Mellat():
         self._payment_url= "https://bpm.shaparak.ir/pgwchannel/startpay.mellat"
 
     def _set_default_settings(self):
-        for item in ["TERMINAL_CODE", "USERNAME", "PASSWORD"]:
-            if item not in self.default_setting_kwargs:
-                raise SettingDoesNotExist()
-            setattr(self, f"_{item.lower()}", self.default_setting_kwargs[item])
-            
+        # for item in ["TERMINAL_CODE", "USERNAME", "PASSWORD"]:
+        #     if item not in self.default_setting_kwargs:
+        #         raise SettingDoesNotExist()
+        #     setattr(self, f"_{item.lower()}", self.default_setting_kwargs[item])
+        pass 
+    
     def _set_status_codes(self):
         try:
-            with open('status_codes.json', 'r') as f:
+            with open('payment/bank/status_codes.json', 'r') as f:
                 status_codes= json.load(f)
+            
             return status_codes
         
         except Exception as e:
@@ -138,8 +140,11 @@ class Mellat():
     def _set_reference_number(self, reference_number):
         self._reference_number= reference_number
 
-
-
+    def get_amount(self):
+        return self._amount
+    
+    def set_amount(self, amount):
+        self._amount= amount
 
     """
     Pay
@@ -161,7 +166,6 @@ class Mellat():
         }
         return data
     
-    
     def ready(self) -> Bank:
         self.pay()
         bank= Bank.objects.create(
@@ -176,6 +180,10 @@ class Mellat():
         if self._client_callback_url:
             self._bank.callback_url= self._client_callback_url
         return bank
+
+    
+    def check_amount(self):
+        return self.get_gateway_amount() >= self.get_minimum_amount()
 
 
     def prepare_amount(self):
@@ -210,14 +218,12 @@ class Mellat():
                 self._set_reference_number(token)
         except ValueError:
             status_text= "Unknown error"
-            if response in self.status_codes:
-                status_text= self.status_codes[response]
+            if response in self._status_codes:
+                status_text= self._status_codes[response]
 
             self._set_transaction_status_text(status_text)
             logging.critical(status_text)
             raise BankGatewayRejectPayment(self.get_transaction_status_text())
-
-
 
 
     """
@@ -302,8 +308,8 @@ class Mellat():
             if not (url_parts[0] and url_parts[1]):
                 url= self.get_request().build_absolute_uri(url)
             query= dict(parse.parse_qsl(self.get_request().GET.urlencode()))
-            query.update({"bank_type": self.get_bank_type()})
-            query.update({"identifier": self.identifier})
+            # query.update({"bank_type": self.get_bank_type()})
+            # query.update({"identifier": self.identifier})
             url= append_querystring(url, query)
 
         return url
