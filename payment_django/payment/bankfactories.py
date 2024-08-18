@@ -5,7 +5,7 @@ import logging
 
 
 from payment import default_settings as settings
-from payment.bank import mellat
+from payment.bank.mellat import Mellat
 from payment.exceptions.exceptions import BankGatewayAutoConnectionFailed
 from payment.models.banks import BankType
 
@@ -31,14 +31,15 @@ class BankFactory:
 
         return bank_class, self._secret_value_reader.read(bank_type=bank_type, identifier=identifier)
 
-    def create(self, bank_type: BankType = None, identifier: str = "1") -> mellat:
+    def create(self, bank_type: BankType = None, identifier: str = "1") ->Mellat:
         """Build bank class"""
         if not bank_type:
             bank_type = self._secret_value_reader.default(identifier)
         logging.debug("Request create bank", extra={"bank_type": bank_type})
 
-        bank_klass, bank_settings = self._import_bank(bank_type, identifier)
-        bank = bank_klass(**bank_settings, identifier=identifier)
+        # bank_klass, bank_settings = self._import_bank(bank_type, identifier)
+        # bank = bank_klass(**bank_settings, identifier=identifier)
+        bank= Mellat()
         bank.set_currency(self._secret_value_reader.currency(identifier))
 
         logging.debug("Create bank")
