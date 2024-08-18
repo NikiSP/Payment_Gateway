@@ -21,7 +21,7 @@ if not settings.IS_SAFE_GET_GATEWAY_PAYMENT:
         path("go-to-bank-gateway/", go_to_bank_gateway, name="go-to-bank-gateway"),
     ]
 
-if settings.IS_SAMPLE_FORM_ENABLE:
+if not settings.IS_SAMPLE_FORM_ENABLE:
     urlpatterns += [
         path("sample-payment/", sample_payment_view, name="sample-payment"),
         path("sample-result/", sample_result_view, name="sample-result"),

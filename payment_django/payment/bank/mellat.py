@@ -21,9 +21,9 @@ from payment.bank.utils import append_querystring
 from payment.models.banks import Bank
 
 class Mellat():
-    _terminal_code= 7164489
+    _terminal_code= "7164489"
     _username= 'ebcom41'
-    _password= 26952397
+    _password= "26952397"
     
     _gateway_currency: str= CurrencyEnum.IRR
     _currency: str= CurrencyEnum.IRR
@@ -169,7 +169,7 @@ class Mellat():
     def ready(self) -> Bank:
         self.pay()
         bank= Bank.objects.create(
-            # bank_choose_identifier= self.identifier,
+         #   bank_choose_identifier= self.identifier,
             amount= self.get_amount(),
             reference_number= self.get_reference_number(),
             response_result= self.get_transaction_status_text(),
@@ -210,10 +210,10 @@ class Mellat():
         
         data= self.get_pay_data()
         client= self._get_client()
+
         response= client.service.bpPayRequest(**data)
-        # print(client)
-        # print(response)
-        # print(data)
+        print(response)
+        
         try:
             status, token= response.split(",")
             if status== "0":

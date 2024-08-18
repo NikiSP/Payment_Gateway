@@ -31,13 +31,12 @@ def callback_view(request):
 @csrf_exempt
 def go_to_bank_gateway(request):
     context = {"params": {}}
-    # print(request.GET.items())
-    # for key, value in request.GET.items():
-    #     if key == "url" or key == "method":
-    #         context[key] = unquote(value)
-    #     else:
-    #         context["params"][key] = unquote(value)
-    go_to_gateway_view(request)
+    for key, value in request.GET.items():
+        if key == "url" or key == "method":
+            context[key] = unquote(value)
+        else:
+            context["params"][key] = unquote(value)
+    print(context)
     return render(request, "azbankgateways/redirect_to_bank.html", context=context)
 
 
