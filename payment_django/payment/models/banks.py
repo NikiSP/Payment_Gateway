@@ -69,9 +69,9 @@ class Bank(models.Model):
     response_result = models.TextField(null=True, blank=True, verbose_name=_("Bank result"))
     callback_url = models.TextField(null=False, blank=False, verbose_name=_("Callback url"))
     extra_information = models.TextField(null=True, blank=True, verbose_name=_("Extra information"))
-    bank_choose_identifier = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=_("Bank choose identifier")
-    )
+    # bank_choose_identifier = models.CharField(
+    #     max_length=255, blank=True, null=True, verbose_name=_("Bank choose identifier")
+    # )
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("Created at"))
     update_at = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("Updated at"))

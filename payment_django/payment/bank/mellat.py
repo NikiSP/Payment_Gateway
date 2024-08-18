@@ -169,7 +169,7 @@ class Mellat():
     def ready(self) -> Bank:
         self.pay()
         bank= Bank.objects.create(
-            bank_choose_identifier= self.identifier,
+            # bank_choose_identifier= self.identifier,
             amount= self.get_amount(),
             reference_number= self.get_reference_number(),
             response_result= self.get_transaction_status_text(),
@@ -211,7 +211,9 @@ class Mellat():
         data= self.get_pay_data()
         client= self._get_client()
         response= client.service.bpPayRequest(**data)
-        
+        # print(client)
+        # print(response)
+        # print(data)
         try:
             status, token= response.split(",")
             if status== "0":
@@ -372,7 +374,7 @@ class Mellat():
                 extra={"status": self._bank.status},
             )
             raise BankGatewayStateInvalid(
-                "You change the status bank record before/after this record change status from redirect to bank. "
+                "You change the status bank record before/after this record change status from .redirect to bank. "
                 "current status is {}".format(self._bank.status)
             )
         self._bank.status= payment_status
@@ -391,7 +393,7 @@ class Mellat():
             logging.debug("Mellat gateway did not settle the payment")
 
 
-    def _prepare_check_gateway(self, amount=None):
+    def _prepare_check_gateway(self, amount= None):
         # Set preliminary data
         if amount:
             self.set_amount(amount)
@@ -399,7 +401,7 @@ class Mellat():
             self.set_amount(10000)
         self.set_client_callback_url("/")
 
-    def check_gateway(self, amount=None):
+    def check_gateway(self, amount= None):
         self._prepare_check_gateway(amount)
         self.pay()
         
@@ -464,7 +466,7 @@ class Mellat():
                 logging.debug("Mellat gateway unapproved the payment")
 
         
-    # WHATS?
+    
     def _set_payment_status(self, payment_status):
         if payment_status==PaymentStatus.RETURN_FROM_BANK and self._bank.status!=PaymentStatus.REDIRECT_TO_BANK:
             logging.debug(
