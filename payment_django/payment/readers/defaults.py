@@ -1,11 +1,10 @@
-from azbankgateways import default_settings as settings
-from azbankgateways.models import BankType
+from payment import default_settings as settings
 
 from payment.readers.bases import Reader
 
 
 class DefaultReader(Reader):
-    def read(self, bank_type: BankType, identifier: str) -> dict:
+    def read(self, bank_type, identifier: str) -> dict:
         """
 
         :param bank_type:

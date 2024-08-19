@@ -7,14 +7,14 @@ BANK_CLASS = getattr(
     settings,
     "CLASS",
     {
-        "BMI": "azbankgateways.banks.BMI",
-        "SEP": "azbankgateways.banks.SEP",
-        "ZARINPAL": "azbankgateways.banks.Zarinpal",
-        "IDPAY": "azbankgateways.banks.IDPay",
-        "ZIBAL": "azbankgateways.banks.Zibal",
-        "BAHAMTA": "azbankgateways.banks.Bahamta",
-        "MELLAT": "azbankgateways.banks.Mellat",
-        "PAYV1": "azbankgateways.banks.PayV1",
+        "BMI": "payment.banks.BMI",
+        "SEP": "payment.banks.SEP",
+        "ZARINPAL": "payment.banks.Zarinpal",
+        "IDPAY": "payment.banks.IDPay",
+        "ZIBAL": "payment.banks.Zibal",
+        "BAHAMTA": "payment.banks.Bahamta",
+        "MELLAT": "payment.banks.Mellat",
+        "PAYV1": "payment.banks.PayV1",
     },
 )
 _AZ_IRANIAN_BANK_GATEWAYS = getattr(settings, "AZ_IRANIAN_BANK_GATEWAYS", {})
@@ -22,7 +22,7 @@ BANK_PRIORITIES = _AZ_IRANIAN_BANK_GATEWAYS.get("BANK_PRIORITIES", [])
 BANK_GATEWAYS = _AZ_IRANIAN_BANK_GATEWAYS.get("GATEWAYS", {})
 BANK_DEFAULT = _AZ_IRANIAN_BANK_GATEWAYS.get("DEFAULT", "BMI")
 SETTING_VALUE_READER_CLASS = _AZ_IRANIAN_BANK_GATEWAYS.get(
-    "SETTING_VALUE_READER_CLASS", "azbankgateways.readers.DefaultReader"
+    "SETTING_VALUE_READER_CLASS", "payment.readers.defaults.DefaultReader"
 )
 CURRENCY = _AZ_IRANIAN_BANK_GATEWAYS.get("CURRENCY", "IRR")
 TRACKING_CODE_QUERY_PARAM = _AZ_IRANIAN_BANK_GATEWAYS.get("TRACKING_CODE_QUERY_PARAM", "tc")

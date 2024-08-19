@@ -47,7 +47,7 @@ class Mellat():
         self._set_default_settings()
         self._status_codes= self._set_status_codes()
         self._payment_url= "https://bpm.shaparak.ir/pgwchannel/startpay.mellat"
-
+        self._game_id= '0'
     def _set_default_settings(self):
         # for item in ["TERMINAL_CODE", "USERNAME", "PASSWORD"]:
         #     if item not in self.default_setting_kwargs:
@@ -145,6 +145,9 @@ class Mellat():
     
     def set_amount(self, amount):
         self._amount= amount
+    
+    def get_game_id(self):
+        return self._game_id
 
     """
     Pay
@@ -310,7 +313,7 @@ class Mellat():
             if not (url_parts[0] and url_parts[1]):
                 url= self.get_request().build_absolute_uri(url)
             query= dict(parse.parse_qsl(self.get_request().GET.urlencode()))
-            # query.update({"bank_type": self.get_bank_type()})
+            # query.update({"game_id": self.get_game_id()})
             # query.update({"identifier": self.identifier})
             url= append_querystring(url, query)
 
@@ -352,7 +355,7 @@ class Mellat():
         try:
             self._bank= Bank.objects.get(
                 Q(Q(reference_number=self.get_reference_number()) | Q(tracking_code=self.get_tracking_code())),
-                Q(bank_type=self.get_bank_type()),
+                Q(game_id=self.get_game_id()),
             )
             logging.debug("Set reference find bank object.")
         except Bank.DoesNotExist:

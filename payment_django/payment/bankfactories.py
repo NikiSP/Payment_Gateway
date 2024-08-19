@@ -33,9 +33,9 @@ class BankFactory:
 
     def create(self, bank_type: BankType = None, identifier: str = "1") ->Mellat:
         """Build bank class"""
-        if not bank_type:
-            bank_type = self._secret_value_reader.default(identifier)
-        logging.debug("Request create bank", extra={"bank_type": bank_type})
+        # if not bank_type:
+        #     bank_type = self._secret_value_reader.default(identifier)
+        # logging.debug("Request create bank", extra={"bank_type": bank_type})
 
         # bank_klass, bank_settings = self._import_bank(bank_type, identifier)
         # bank = bank_klass(**bank_settings, identifier=identifier)

@@ -58,6 +58,14 @@ class Bank(models.Model):
     # It's local and generate locally
     tracking_code = models.CharField(max_length=255, null=False, blank=False, verbose_name=_("Tracking code"))
     amount = models.CharField(max_length=10, null=False, blank=False, verbose_name=_("Amount"))
+    
+    game_id = models.CharField(
+        max_length=50,
+        null=False,
+        blank=False,
+        verbose_name=_("Game_ID"),
+    )
+    
     # Reference number return from bank
     reference_number = models.CharField(
         unique=True,

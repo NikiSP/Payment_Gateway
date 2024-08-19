@@ -22,7 +22,7 @@ def sample_payment_view(request):
             mobile_number = form.cleaned_data["mobile_number"]
             factory = bankfactories.BankFactory()
             try:
-                bank = factory.auto_create()
+                bank = factory.create()
                 bank.set_request(request)
                 bank.set_amount(amount)
                 # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
