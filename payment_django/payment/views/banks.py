@@ -12,15 +12,8 @@ from payment.exceptions.exceptions import AZBankGatewaysException
 
 @csrf_exempt
 def callback_view(request):
-    bank_type = "MELLAT" #request.GET.get("bank_type", None)
-    identifier = request.GET.get("identifier", None)
-
-    if not bank_type:
-        logging.critical("Bank type is required. but it doesnt send.")
-        raise Http404
-
     factory = BankFactory()
-    bank = factory.create(bank_type, identifier=identifier)
+    bank= factory.create()
     try:
         bank.verify_from_gateway(request)
     except AZBankGatewaysException:
@@ -36,34 +29,34 @@ def go_to_bank_gateway(request):
             context[key] = unquote(value)
         else:
             context["params"][key] = unquote(value)
-    print(context)
+
     return render(request, "azbankgateways/redirect_to_bank.html", context=context)
 
 
-def go_to_gateway_view(request):
-    # خواندن مبلغ از هر جایی که مد نظر است
-    amount = 1000
-    # تنظیم شماره موبایل کاربر از هر جایی که مد نظر است
-    user_mobile_number = "+989396551765"  # اختیاری
+# def go_to_gateway_view(request):
+    # # خواندن مبلغ از هر جایی که مد نظر است
+    # amount = 100000
+    # # تنظیم شماره موبایل کاربر از هر جایی که مد نظر است
+    # user_mobile_number = "+989396551765"  # اختیاری
 
-    factory= BankFactory()
-    try:
-        bank= (
-            factory.create()
-        )  # or factory.create(bank_models.BankType.BMI) or set identifier
-        bank.set_request(request)
-        bank.set_amount(amount)
-        # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
-        # bank.set_client_callback_url(reverse("callback-gateway"))
-        bank.set_mobile_number(user_mobile_number)  # اختیاری
+    # factory= BankFactory()
+    # try:
+    #     bank= (
+    #         factory.create()
+    #     )  # or factory.create(bank_models.BankType.BMI) or set identifier
+    #     bank.set_request(request)
+    #     bank.set_amount(amount)
+    #     # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
+    #     # bank.set_client_callback_url(reverse("callback-gateway"))
+    #     bank.set_mobile_number(user_mobile_number)  # اختیاری
 
-        # در صورت تمایل اتصال این رکورد به رکورد فاکتور یا هر چیزی که بعدا بتوانید ارتباط بین محصول یا خدمات را با این
-        # پرداخت برقرار کنید.
-        bank_record = bank.ready()
+    #     # در صورت تمایل اتصال این رکورد به رکورد فاکتور یا هر چیزی که بعدا بتوانید ارتباط بین محصول یا خدمات را با این
+    #     # پرداخت برقرار کنید.
+    #     bank_record = bank.ready()
 
-        # هدایت کاربر به درگاه بانک
-        return bank.redirect_gateway()
-    except AZBankGatewaysException as e:
-        logging.critical(e)
-        # TODO: redirect to failed page.
-        raise e
+    #     # هدایت کاربر به درگاه بانک
+    #     return bank.redirect_gateway()
+    # except AZBankGatewaysException as e:
+    #     logging.critical(e)
+    #     # TODO: redirect to failed page.
+    #     raise e

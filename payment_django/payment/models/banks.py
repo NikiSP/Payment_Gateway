@@ -50,22 +50,12 @@ class Bank(models.Model):
         choices=PaymentStatus.choices,
         verbose_name=_("Status"),
     )
-    bank_type = models.CharField(
-        max_length=50,
-        choices=BankType.choices,
-        verbose_name=_("Bank"),
-    )
     # It's local and generate locally
     tracking_code = models.CharField(max_length=255, null=False, blank=False, verbose_name=_("Tracking code"))
     amount = models.CharField(max_length=10, null=False, blank=False, verbose_name=_("Amount"))
     
-    game_id = models.CharField(
-        max_length=50,
-        null=False,
-        blank=False,
-        verbose_name=_("Game_ID"),
-    )
-    
+    game_id = models.TextField(null=False, blank=False, verbose_name=_("Game_ID"))
+
     # Reference number return from bank
     reference_number = models.CharField(
         unique=True,

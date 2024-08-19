@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from payment import bankfactories
 from payment import default_settings as settings
-from payment import models as bank_models
+from payment.models import banks as bank_models
 from payment.apps import AZIranianBankGatewaysConfig
 from payment.exceptions.exceptions import AZBankGatewaysException
 from payment.forms import PaymentSampleForm
@@ -20,13 +20,16 @@ def sample_payment_view(request):
         if form.is_valid():
             amount = form.cleaned_data["amount"]
             mobile_number = form.cleaned_data["mobile_number"]
+            game_id= form.cleaned_data["game_id"]
             factory = bankfactories.BankFactory()
             try:
                 bank = factory.create()
                 bank.set_request(request)
                 bank.set_amount(amount)
+                bank.set_game_id(game_id)
                 # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
                 bank.set_client_callback_url(reverse(settings.SAMPLE_RESULT_NAMESPACE))
+                # print(reverse(settings.SAMPLE_RESULT_NAMESPACE))
                 bank.set_mobile_number(mobile_number)  # اختیاری
 
                 # در صورت تمایل اتصال این رکورد به رکورد فاکتور یا هر چیزی که

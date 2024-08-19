@@ -48,6 +48,7 @@ class Mellat():
         self._status_codes= self._set_status_codes()
         self._payment_url= "https://bpm.shaparak.ir/pgwchannel/startpay.mellat"
         self._game_id= '0'
+        
     def _set_default_settings(self):
         # for item in ["TERMINAL_CODE", "USERNAME", "PASSWORD"]:
         #     if item not in self.default_setting_kwargs:
@@ -81,7 +82,7 @@ class Mellat():
 
     @staticmethod
     def get_minimum_amount():
-        return 1000
+        return 10000
 
     """
     Basic Methods
@@ -149,6 +150,8 @@ class Mellat():
     def get_game_id(self):
         return self._game_id
 
+    def set_game_id(self, game_id):
+        self._game_id= game_id
     """
     Pay
     """
@@ -177,16 +180,23 @@ class Mellat():
             reference_number= self.get_reference_number(),
             response_result= self.get_transaction_status_text(),
             tracking_code= self.get_tracking_code(),
+            game_id= self.get_game_id(),
+            # amount=self.get_amount(),
+            # reference_number=self.get_reference_number(),
+            # response_result=self.get_transaction_status_text(),
+            # tracking_code=self.get_tracking_code(),
+            # game_id="abx",  # Include this since it's required
+            # status= PaymentStatus.WAITING  # Example: setting a default status
         )
         self._bank= bank
         self._set_payment_status(PaymentStatus.WAITING)
         if self._client_callback_url:
             self._bank.callback_url= self._client_callback_url
-        return bank
+        return self._bank
 
     
     def check_amount(self):
-        return self.get_gateway_amount() >= self.get_minimum_amount()
+        return int(self.get_gateway_amount()) >= self.get_minimum_amount()
 
 
     def prepare_amount(self):
@@ -353,9 +363,13 @@ class Mellat():
 
     def _set_bank_record(self):
         try:
+            for i in range(2):
+                print("data")
+            print(Bank.objects.all().values_list('reference_number', flat=True))
+            for i in range(2):
+                print("data")
             self._bank= Bank.objects.get(
                 Q(Q(reference_number=self.get_reference_number()) | Q(tracking_code=self.get_tracking_code())),
-                Q(game_id=self.get_game_id()),
             )
             logging.debug("Set reference find bank object.")
         except Bank.DoesNotExist:
