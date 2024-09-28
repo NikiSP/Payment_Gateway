@@ -10,7 +10,10 @@ from payment.models import banks as bank_models
 from payment.apps import AZIranianBankGatewaysConfig
 from payment.exceptions.exceptions import AZBankGatewaysException
 from payment.forms import PaymentSampleForm
+from rest_framework.decorators import api_view
 
+
+@api_view(['GET', 'POST'])
 def sample_payment_view(request):
     # if this is a POST request we need to process the form data
     if request.method == "POST":
@@ -54,6 +57,7 @@ def sample_payment_view(request):
     return render(request, "azbankgateways/samples/gateway.html", {"form": form})
 
 
+@api_view(['GET'])
 def sample_result_view(request):
     tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
     if not tracking_code:

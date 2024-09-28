@@ -8,9 +8,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 from payment.bankfactories import BankFactory
 from payment.exceptions.exceptions import AZBankGatewaysException
+from rest_framework.decorators import api_view
 
 
 @csrf_exempt
+@api_view()
 def callback_view(request):
     factory = BankFactory()
     bank= factory.create()
@@ -22,6 +24,7 @@ def callback_view(request):
 
 
 @csrf_exempt
+@api_view()
 def go_to_bank_gateway(request):
     context = {"params": {}}
     for key, value in request.GET.items():
